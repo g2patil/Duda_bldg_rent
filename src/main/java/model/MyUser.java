@@ -2,8 +2,7 @@ package model;
 
 import java.util.List;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,9 +13,13 @@ public class MyUser {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+    @Column(length =70)
     private String username;
+    @Column(length =255)
     private String password;
+    @Column(length =30)
     private String role;
+    @Column(length =10)
     private long mob;
 	public long getId() {
 		return id;

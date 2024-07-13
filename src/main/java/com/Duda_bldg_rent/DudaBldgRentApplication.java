@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication//(exclude = {SecurityConf.class})
 @EnableJpaRepositories(basePackages = "model")
-@EntityScan(basePackages = "model")
+@EntityScan(basePackages = {"model","service"})
 @ComponentScan(basePackages = {"com.Duda_bldg_rent", "model"})
 public class DudaBldgRentApplication {
 
