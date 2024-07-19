@@ -48,6 +48,7 @@ public class SecurityConf {
 				registery.requestMatchers("/adnya/login").permitAll();
 				registery.requestMatchers("/register/user").permitAll();
 				registery.requestMatchers("/adnya/register/user").permitAll();
+				registery.requestMatchers("/adnya/register/bldg").permitAll();
 				registery.requestMatchers("/adnya/home").permitAll();
 				registery.requestMatchers("/adnya/admin/home").hasRole("SUPER");
 			})     	.formLogin(formLogin ->formLogin.permitAll())

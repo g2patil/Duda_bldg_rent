@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import model.MyUser;
 import model.MyUserRepository;
+import model.bldg;
+import model.bldgRepository;
 
 
 @Controller
@@ -41,7 +43,11 @@ public class ContentController {
 		return "User Home";
 	}
 	@Autowired
+	private bldgRepository BldgRepository;
+	
+	@Autowired
 	private MyUserRepository myUserRepository;
+	
 	
 	@Autowired
 	private PasswordEncoder  passwordEncoder;
@@ -53,6 +59,17 @@ public class ContentController {
 		return myUserRepository.save(user);
 	
 }
+	
+	@PostMapping("/register/bldg")
+	public bldg createbldg(@RequestBody bldg Bldg){
+		
+				return BldgRepository.save(Bldg);
+	
+}	
+	
+	
+	
+	
 	@Autowired
     private AuthenticationManager authenticationManager;
 	
