@@ -1,6 +1,7 @@
 package model;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,8 @@ public class MyUserDetailService implements UserDetailsService {
 		//return null;
 	
 	}
-
-
-
+	
+	
 	private String[] getRoles(MyUser user) {
 		// TODO Auto-generated method stub
 		if(user.getRole()==null) {

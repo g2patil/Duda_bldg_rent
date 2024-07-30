@@ -1,22 +1,31 @@
 package com.Duda_bldg_rent;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
-
+import jakarta.servlet.http.HttpServletResponse;
+import model.JwtUtil;
 import model.MyUser;
 import model.MyUserRepository;
 import model.bldg;
@@ -67,14 +76,30 @@ public class ContentController {
 	
 }	
 	
+	@GetMapping("/users")
+	 public List<MyUser> getUsername() {
+		//return null;
+	 return myUserRepository.findAll();
+    }
 	
+	@GetMapping("/users/find/{usr}")
+	 public Optional<MyUser> getUser(@PathVariable String usr) {
+		//return null;
+	 return myUserRepository.findByUsername(usr);
+   }
+	
+
 	
 	
 	@Autowired
     private AuthenticationManager authenticationManager;
 	
+	private final SecurityContextHolderStrategy 
+	securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
+	
+	
 	 @PostMapping("/login")
-	    public boolean login(@RequestBody AuthRequest authRequest) {
+     public boolean login(@RequestBody AuthRequest authRequest) {
 	        try {
 	            Authentication authentication = authenticationManager.authenticate(
 	                    new UsernamePasswordAuthenticationToken(
@@ -83,6 +108,11 @@ public class ContentController {
 	                    )
 	            );
 	            SecurityContextHolder.getContext().setAuthentication(authentication);
+	            SecurityContext context = securityContextHolderStrategy.createEmptyContext();
+	            context.setAuthentication(authentication);
+	            
+	        //    myUserRepository.saveContext(context, authRequest); 
+	       
 	            return true;
 	        } catch (AuthenticationException e) {
 	            return false;
